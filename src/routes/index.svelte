@@ -1,20 +1,28 @@
-
-
-<script>
-    import DefaultButton from "../lib/button/DefaultButton.svelte";
-    import DefaultLogo from "../lib/logos/DefaultLogo.svelte";
+<script lang="ts">
     import PagePrototype from "../lib/page/PagePrototype.svelte";
     import ScaleSlider from "../lib/sliders/ScaleSlider.svelte";
     import ScaleButton from "../lib/button/ScaleButton.svelte";
     import TopArrow from "../lib/arrows/TopArrow.svelte";
-    import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+    import {fade,fly} from 'svelte/transition';
+    import ContainerWelcome from "../lib/containers/ContainerWelcome.svelte";
+    import ContainerHeader from "../lib/containers/ContainerHeader.svelte";
+    import ContainerEditing from "../lib/containers/ContainerEditing.svelte";
+    import ContainerFinal from "../lib/containers/ContainerFinal.svelte";
 
+    const enum ContainerTypes {
+        Welcome, Editing, Header, Final
+    }
 
-    import {fade} from 'svelte/transition';
+    function navigate(event): void {
+        currentContainer = event.detail.destination;
+    }
+
 
     let currentScale;
-
     let pagePrototype;
+    let currentContainer = ContainerTypes.Final;
+
+
 </script>
 
 <svelte:head>
@@ -26,47 +34,47 @@
 
     <div id="editor" class="split">
         <PagePrototype bind:this={pagePrototype} bind:scaleX={currentScale} bind:scaleY={currentScale}/>
-        <div id="topArrow" transition:fade><TopArrow  /></div>
+        <div id="topArrow" transition:fade>
+            <TopArrow/>
+        </div>
         <div id="scaleSlider">
-           <div style="margin-bottom: -6px;"  on:click="{() => pagePrototype.reset()}"> <ScaleButton /></div>
-            <div style="margin-left: -10px"><ScaleSlider  bind:currentScale={currentScale}/></div>
+            <div style="margin-bottom: -6px;" on:click="{() => pagePrototype.reset()}">
+                <ScaleButton/>
+            </div>
+            <div style="margin-left: -10px">
+                <ScaleSlider bind:currentScale={currentScale}/>
+            </div>
         </div>
     </div>
 
 
-
     <div id="content" class="split">
+        {#if currentContainer === ContainerTypes.Welcome}
+            <ContainerWelcome on:navigate={navigate}/>
+        {:else if currentContainer === ContainerTypes.Header}
+            <ContainerHeader/>
+        {:else if currentContainer === ContainerTypes.Editing}
+            <ContainerEditing/>
+        {:else if currentContainer === ContainerTypes.Final}
+            <div transition:fly>  <ContainerFinal/></div>
+        {/if}
 
-        <div style="margin-bottom: 1rem">
-            <DefaultLogo/>
-        </div>
-
-        <div style="margin-bottom: 2rem">
-            <span style="margin-bottom: 1rem" class="text-xl text-gray-700 opacity-50"> Erstellen Sie jetzt Ihr:</span>
-            <div class="text-2xl"><span class=" text-sire-primary text-opacity-30">Notiz</span> <span class=" text-sire-primary">Anschreiben</span> <span class=" text-sire-primary text-opacity-50">Kündigung</span> <span class=" text-sire-primary text-opacity-20">Bewerbungsschreiben</span>
-            </div>
-
-        </div>
-
-
-        <div>
-            <DefaultButton text={"Anmelden"} icon={faDoorOpen}/>
-        </div>
 
     </div>
 
 
 </div>
 <style>
-    #scaleSlider{
+    #scaleSlider {
         position: fixed;
         align-items: flex-end;
         display: flex;
-       bottom: 2rem;
+        bottom: 2rem;
         left: 2rem;
         z-index: 1000;
     }
-    #topArrow{
+
+    #topArrow {
         position: fixed;
         align-items: flex-end;
         display: flex;
@@ -76,6 +84,7 @@
         width: 100px;
         height: 100px;
     }
+
     .split {
         height: 100%;
         width: 100%;

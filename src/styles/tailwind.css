@@ -12,7 +12,12 @@
 
 .buttonDefault {
     @apply hover:bg-gray-300 text-base bg-gray-100 text-gray-700 py-1 pr-6 pl-3 rounded inline-flex items-center ;
-    -webkit-animation: pulser 1.5s infinite !;
+    -webkit-animation: pulser 1.5s infinite;
+
+}
+.buttonInverted {
+    @apply hover:bg-gray-300 text-base bg-sire-primary text-white py-1 pr-6 pl-3 rounded inline-flex items-center ;
+    -webkit-animation: pulser 1.5s infinite;
 
 }
 

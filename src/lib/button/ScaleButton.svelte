@@ -6,4 +6,4 @@
 
 
 
-<Fa icon={faUndoAlt}   size="lg" class="bg-gray-100 rounded-full cursor-pointer" style="padding: 3px"/>
+<Fa icon={faUndoAlt}    size="lg" class="bg-gray-100 rounded-full cursor-pointer" style="padding: 3px"/>
