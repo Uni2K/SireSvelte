@@ -3,7 +3,7 @@
     import ScaleSlider from "../lib/sliders/ScaleSlider.svelte";
     import ScaleButton from "../lib/button/ScaleButton.svelte";
     import TopArrow from "../lib/arrows/TopArrow.svelte";
-    import {fade,fly} from 'svelte/transition';
+    import {fade, fly} from 'svelte/transition';
     import ContainerWelcome from "../lib/containers/ContainerWelcome.svelte";
     import ContainerHeader from "../lib/containers/ContainerHeader.svelte";
     import ContainerEditing from "../lib/containers/ContainerEditing.svelte";
@@ -20,7 +20,7 @@
 
     let currentScale;
     let pagePrototype;
-    let currentContainer = ContainerTypes.Final;
+    let currentContainer = ContainerTypes.Editing;
 
 
 </script>
@@ -52,11 +52,17 @@
         {#if currentContainer === ContainerTypes.Welcome}
             <ContainerWelcome on:navigate={navigate}/>
         {:else if currentContainer === ContainerTypes.Header}
-            <ContainerHeader/>
+            <div transition:fly>
+                <ContainerHeader on:navigate={navigate}/>
+            </div>
         {:else if currentContainer === ContainerTypes.Editing}
-            <ContainerEditing/>
+            <div transition:fly>
+                <ContainerEditing on:navigate={navigate}/>
+            </div>
         {:else if currentContainer === ContainerTypes.Final}
-            <div transition:fly>  <ContainerFinal/></div>
+            <div transition:fly>
+                <ContainerFinal on:navigate={navigate}/>
+            </div>
         {/if}
 
 

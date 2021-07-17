@@ -8,7 +8,7 @@
 
     function navigate() {
         dispatch('navigate', {
-            destination: 3
+            destination: 2
         });
     }
 

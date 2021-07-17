@@ -3,13 +3,27 @@
     import SocialMediaButton from "../button/SocialMediaButton.svelte";
     import {faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
     import DefaultButton from "../button/DefaultButton.svelte";
+    import * as jsPDF from "jspdf";
 
     function printDiv(divName) {
-        const printContents = document.getElementById(divName).innerHTML;
-        const originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+     /*   const doc = new jsPDF();
+        const elementHandler = {
+            '#ignorePDF': function (element, renderer) {
+                return true;
+            }
+        };
+        const source = window.document.getElementsByTagName("body")[0];
+        doc.fromHTML(
+            source,
+            15,
+            15,
+            {
+                'width': 180,'elementHandlers': elementHandler
+            });
+
+        doc.output("dataurlnewwindow");
+*/
+
     }
 
 
