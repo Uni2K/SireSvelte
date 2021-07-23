@@ -3,15 +3,28 @@
     import {faCheck, faFont, faHeading, faUndoAlt, faPen, faImage} from "@fortawesome/free-solid-svg-icons";
     import DefaultButton from "../button/DefaultButton.svelte";
     import EditingList from "../lists/EditingList.svelte";
+    import Modal from 'svelte-simple-modal';
+    import DialogSignature from "../dialogs/DialogSignature.svelte";
     import {createEventDispatcher} from "svelte";
-
     const dispatch = createEventDispatcher();
+    import { writable } from 'svelte/store';
+    const modal = writable(null);
+    import { bind } from 'svelte-simple-modal';
+
+
+
 
     function navigate() {
         dispatch('navigate', {
             destination: 3
         });
     }
+
+    const openSignatureModal = () => {
+        modal.set(bind(DialogSignature,{ message: 'custom name'}), )
+    };
+
+
 
 </script>
 
@@ -32,7 +45,7 @@
 
 
         <div style="margin-top: auto; margin-bottom: 30px; ">
-            <DefaultButton text="Unterschrift hinzufügen"  icon="{faPen}"/><br>
+            <DefaultButton text="Unterschrift hinzufügen"  icon="{faPen}" on:click={()=>openSignatureModal()}/><br>
             <DefaultButton text="Bild hochladen"  icon="{faImage}"/>
         </div>
 
@@ -45,7 +58,7 @@
 
     </div>
 </div>
-
+<Modal show={$modal} />
 <style>
 
     #topContainer {
